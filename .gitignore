@@ -10,7 +10,8 @@ build/
 *.spec
 
 # 本地数据：库、CSV 缓存、以及含 API Key 的配置，都别进仓库
-data/
+# 前导斜杠不能省：写成 data/ 会连源码里的 app/data/ 一起忽略掉
+/data/
 
 # 系统垃圾
 .DS_Store
