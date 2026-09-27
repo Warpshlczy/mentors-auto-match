@@ -7,6 +7,8 @@
 ![MentorMatch](app/icon/banner.jpg)
 
 # MentorMatch · 导师匹配助手
+本项目已收录于CityU Hub:
+[![CityU Hub](https://cityu-hub.bond/badge/warpshlczy-mentors-auto-match.svg)](https://cityu-hub.bond/project/warpshlczy-mentors-auto-match)关注城大同学们的作品谢谢喵～
 
 把简历（或者 research plan）丢进去，选个学位去 CSRankings 捞一批导师，挨个算匹配度，最后按分数排好告诉你该给谁发邮件。
 
