@@ -1,0 +1,51 @@
+name: 打包
+
+# 推上 main 就自动出三个平台的包，也可以在 Actions 页面手动点一次。
+# 本地跑 scripts/build.py 只能打当前平台，到这里来补齐另外两个。
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # 注意：macos-13 这个 Intel 镜像 2025 年 12 月就退役了，现在的 Intel 标签是 macos-15-intel
+          - os: macos-15-intel
+            name: macOS Intel
+          - os: macos-14        # Apple Silicon（M 系列）
+            name: macOS Apple Silicon
+          - os: windows-latest
+            name: Windows x64
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: 装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller
+
+      - name: 自检
+        run: python tests/test_pdf_checker.py
+
+      - name: 打包
+        run: python scripts/build.py
+
+      - uses: actions/upload-artifact@v5
+        with:
+          # runner.arch 由 GitHub 给出（X64 / ARM64），产物名不会因为标签配错而说谎
+          name: MentorMatch-${{ runner.os }}-${{ runner.arch }}
+          path: |
+            dist/*.dmg
+            dist/*.zip
+          if-no-files-found: error

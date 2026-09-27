@@ -1,0 +1,5 @@
+PyQt6>=6.6
+pypdf>=4.0
+requests>=2.31
+beautifulsoup4>=4.12
+rapidfuzz>=3.0
