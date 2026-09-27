@@ -14,6 +14,10 @@ jobs:
   build:
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
+    # Windows runner 的控制台默认是 cp1252，脚本 print 中文会 UnicodeEncodeError。
+    # 开 UTF-8 模式（PEP 540），stdout/stderr 固定走 UTF-8，一处管住所有步骤。
+    env:
+      PYTHONUTF8: "1"
     strategy:
       fail-fast: false
       matrix:
